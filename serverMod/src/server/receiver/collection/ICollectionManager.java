@@ -1,0 +1,46 @@
+package server.receiver.collection;
+
+import com.google.gson.JsonSyntaxException;
+import server.exceptions.NoPermissionsException;
+import common.generatedClasses.Route;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * Интерфейс для работы с коллекцией.
+ */
+public interface ICollectionManager {
+    String info ( );
+
+    void add (Route route);
+
+    void clear ( );
+
+    boolean removeById (long id);
+
+    String show ( );
+
+    List<Route> filterLessThanDistance (Float distance);
+
+
+
+    long removeGreater (Route route);
+
+    long removeLower (Route route);
+
+    public String printAscending ( );
+
+    boolean updateId (long id, Route route);
+
+    Float sumOfDistance ( );
+
+    int size ( );
+
+    List<Route> sort (List<Route> routes);
+
+    void save (String path) throws JsonSyntaxException, NullPointerException, FileNotFoundException, NoPermissionsException, IOException;
+
+    void load (String path) throws JsonSyntaxException, NullPointerException, FileNotFoundException, NoPermissionsException, IOException;
+}
