@@ -182,7 +182,7 @@ public class UserManager {
                 writeln("И зачем аргумент? Вы понимаете, что наделали?");
                 return false;
         }
-        if (trueArg.startsWith("F")) {
+        if (trueArg.startsWith("Float")) {
                 try {
                     Float.parseFloat(arg);
                     return true;
@@ -191,7 +191,7 @@ public class UserManager {
                     return false;
                 }
         }
-        if (trueArg.startsWith("L")) {
+        if (trueArg.startsWith("Long")) {
                 try {
                     Long.parseLong(arg);
                     return true;

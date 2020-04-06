@@ -28,7 +28,7 @@ public interface ICollectionManager {
 
     long removeGreater (Route route);
 
-    long removeLower (Route route);
+    void removeLower (Route route);
 
     public String printAscending ( );
 
@@ -38,7 +38,7 @@ public interface ICollectionManager {
 
     int size ( );
 
-    List<Route> sort (List<Route> routes);
+    List<Route> sort (Route route);
 
     void save (String path) throws JsonSyntaxException, NullPointerException, FileNotFoundException, NoPermissionsException, IOException;
 

@@ -38,7 +38,7 @@ public class Driver {
         registerCommand(new ClearCommand( ));
 //        registerCommand(new ExecuteScriptCommand( ));
 //        registerCommand(new ExitCommand( ));
-//        registerCommand(new FilterLessThanDistanceCommand( ));
+        registerCommand(new FilterLessThanDistanceCommand( ));
         registerCommand(new HelpCommand( ));
 //        registerCommand(new HistoryCommand( ));
         registerCommand(new InfoCommand( ));
@@ -46,11 +46,11 @@ public class Driver {
 //        registerCommand(new PrintAscendingCommand( ));
 //        registerCommand(new RemoveByIdCommand( ));
 //        registerCommand(new RemoveGreaterCommand( ));
-//        registerCommand(new RemoveLowerCommand( ));
+        registerCommand(new RemoveLowerCommand( ));
 //        registerCommand(new SaveCommand( ));
         registerCommand(new ShowCommand( ));
-//        registerCommand(new SumOfDistanceCommand( ));
-//        registerCommand(new UpdateIdCommand( ));
+        registerCommand(new SumOfDistanceCommand( ));
+        registerCommand(new UpdateIdCommand( ));
 
     }
 

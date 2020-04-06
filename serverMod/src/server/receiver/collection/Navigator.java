@@ -11,6 +11,7 @@ import server.json.JsonSerialization;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,10 +80,6 @@ public class Navigator implements ICollectionManager {
     @Override
     public String show() {
         return Stream.builder().add("Элементов в коллекции: " + routeBook.size()).add(routeBook.toList().stream().map(x -> x.toString()).collect(Collectors.joining("\n"))).build().map(x -> x.toString()).collect(Collectors.joining("\n"));
-        //dataExchange.sendToClient(Driver.getLive().getAllCommands().stream().map(x -> x.toString()).collect(Collectors.joining("\n")));
-//        StringBuilder stringBuilder = new StringBuilder("Элементов в коллекции: " + routeBook.size()).append("\n");
-//        routeBook.toList().forEach(x -> stringBuilder.append(x.toString()).append('\n'));
-//        return stringBuilder.toString();
     }
     /**
      * Генерирует новый id
@@ -129,13 +126,15 @@ public class Navigator implements ICollectionManager {
     /**
      * Метод сортирующий коллекцию обьъектов класса Route(маршрутов)
      *
-     * @param routes коллекция объектов класса Route(маршрутов)
+    // * @param коллекция объектов класса Route(маршрутов)
      * @return routes2 возвращает отсортированную коллекцию объектов класса Route(маршрутов)
      */
-    @Override
-    public List<Route> sort(List<Route> routes) {
-        Collections.sort(routes, new NameComparator().thenComparing(new DistanceComparator()).thenComparing(new XxFromComparator()).thenComparing(new YyFromComparator()).thenComparing(new XFromXToComparator()).thenComparing(new YFromYToComparator()));
-        return routes;
+    //@Override
+    public List<Route> sort(Route route) {
+        List<Route> list = new ArrayList<>(routeBook.toList());
+        list.add(route);
+
+        return (list.stream().sorted(new NameComparator().thenComparing(new DistanceComparator()).thenComparing(new XxFromComparator()).thenComparing(new YyFromComparator()).thenComparing(new XFromXToComparator()).thenComparing(new YFromYToComparator())).collect(Collectors.toList()));
     }
 
     /**
@@ -155,8 +154,7 @@ public class Navigator implements ICollectionManager {
      */
     @Override
     public long removeGreater(Route route) {
-        return routeBook.toList().stream().filter(x -> x.compareTo(route) < 0).count();
-
+       return routeBook.toList().stream().count();
     }
 
     /**
@@ -165,8 +163,11 @@ public class Navigator implements ICollectionManager {
      * @param route эемент для сравнения
      */
     @Override
-    public long removeLower(Route route) {
-        return routeBook.toList().stream().filter(x -> x.compareTo(route) > 0).count();
+    public void removeLower(Route route) {
+//        List<Route> list = new ArrayList<>(routeBook.toList());
+//        list.add(route);
+//        System.out.println(sort( ).indexOf(route));
+        routeBook.toList().stream().filter(x -> sort(route).indexOf(x) < sort(route).indexOf(route)).forEach(routeBook::remove);
     }
 
     /**
@@ -177,10 +178,11 @@ public class Navigator implements ICollectionManager {
         if (routeBook.size() == 0) {
             return "Коллекция пуста";
         } else {
-            StringBuilder stringBuilder = new StringBuilder("Элементов в коллекции: " + routeBook.size()).append("\n");
-            sort(routeBook.toList()).forEach(x -> stringBuilder.append(x.toString()).append('\n'));
-            return stringBuilder.append("Коллекция успешно отсортирована!").toString();
+//            StringBuilder stringBuilder = new StringBuilder("Элементов в коллекции: " + routeBook.size()).append("\n");
+//            sort(route).forEach(x -> stringBuilder.append(x.toString()).append('\n'));
+            //return stringBuilder.append("Коллекция успешно отсортирована!").toString();
         }
+        return "lkjhg";
     }
 
     /**
