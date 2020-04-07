@@ -17,9 +17,9 @@ public class JsonDeserialization {
         LinkedHashSet<Route> routesFile;
         File file = new File(path);
         if (!file.exists()) {
-            throw new NoPermissionsException("Файла по заданному пути нет");
+            throw new NoPermissionsException("Упс... У нас проблемки. Файла по заданному пути нет, коллекцию не выгрузить \n");
         } else if (!file.canRead()) {
-            throw new NoPermissionsException("Недостаточно прав для работы с файлом");
+            throw new NoPermissionsException("Упс... У нас проблемки. Недостаточно прав для работы с файлом, коллекцию не выгрузить \n");
         } else {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             routesFile = new GsonBuilder().registerTypeAdapter(ZonedDateTime.class, new GsonZonedDateTimeConverter()).setPrettyPrinting().create().fromJson(bufferedReader, new TypeToken<LinkedHashSet<Route>>() {

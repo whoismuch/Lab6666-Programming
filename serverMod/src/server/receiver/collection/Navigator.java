@@ -12,7 +12,6 @@ import server.json.JsonSerialization;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -129,13 +128,18 @@ public class Navigator implements ICollectionManager {
     // * @param коллекция объектов класса Route(маршрутов)
      * @return routes2 возвращает отсортированную коллекцию объектов класса Route(маршрутов)
      */
-    //@Override
+    @Override
     public List<Route> sort(Route route) {
         List<Route> list = new ArrayList<>(routeBook.toList());
         list.add(route);
-
         return (list.stream().sorted(new NameComparator().thenComparing(new DistanceComparator()).thenComparing(new XxFromComparator()).thenComparing(new YyFromComparator()).thenComparing(new XFromXToComparator()).thenComparing(new YFromYToComparator())).collect(Collectors.toList()));
     }
+
+    @Override
+    public List<Route> sort() {
+        return routeBook.toList().stream().sorted(new NameComparator().thenComparing(new DistanceComparator()).thenComparing(new XxFromComparator()).thenComparing(new YyFromComparator()).thenComparing(new XFromXToComparator()).thenComparing(new YFromYToComparator())).collect(Collectors.toList());
+    }
+
 
     /**
      * Метод выводит элементы, значение поля distance которых меньше заданного
@@ -153,8 +157,8 @@ public class Navigator implements ICollectionManager {
      * @param route эемент для сравнения
      */
     @Override
-    public long removeGreater(Route route) {
-       return routeBook.toList().stream().count();
+    public void removeGreater(Route route) {
+        routeBook.toList().stream().filter(x -> sort(route).indexOf(x) > sort(route).indexOf(route)).forEach(routeBook::remove);
     }
 
     /**
@@ -164,9 +168,6 @@ public class Navigator implements ICollectionManager {
      */
     @Override
     public void removeLower(Route route) {
-//        List<Route> list = new ArrayList<>(routeBook.toList());
-//        list.add(route);
-//        System.out.println(sort( ).indexOf(route));
         routeBook.toList().stream().filter(x -> sort(route).indexOf(x) < sort(route).indexOf(route)).forEach(routeBook::remove);
     }
 
@@ -175,14 +176,12 @@ public class Navigator implements ICollectionManager {
      */
     @Override
     public String printAscending() {
-        if (routeBook.size() == 0) {
+        if (sort().size() == 0) {
             return "Коллекция пуста";
         } else {
-//            StringBuilder stringBuilder = new StringBuilder("Элементов в коллекции: " + routeBook.size()).append("\n");
-//            sort(route).forEach(x -> stringBuilder.append(x.toString()).append('\n'));
-            //return stringBuilder.append("Коллекция успешно отсортирована!").toString();
+            return sort().stream().map(x -> x.toString()).collect(Collectors.joining("\n"));
         }
-        return "lkjhg";
+
     }
 
     /**

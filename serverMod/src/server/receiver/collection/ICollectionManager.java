@@ -26,7 +26,7 @@ public interface ICollectionManager {
 
 
 
-    long removeGreater (Route route);
+    void removeGreater (Route route);
 
     void removeLower (Route route);
 
@@ -39,6 +39,8 @@ public interface ICollectionManager {
     int size ( );
 
     List<Route> sort (Route route);
+
+    List<Route> sort ();
 
     void save (String path) throws JsonSyntaxException, NullPointerException, FileNotFoundException, NoPermissionsException, IOException;
 

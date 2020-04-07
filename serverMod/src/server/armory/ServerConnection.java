@@ -32,6 +32,7 @@ public class ServerConnection<T> {
             DataExchangeWithClient dataExchangeWithClient = new DataExchangeWithClient(getFromClient,sendToClient);
             Driver driver = new Driver();
             dataExchangeWithClient.sendToClient(gson.toJson(driver.getAvailable()));
+            driver.load(dataExchangeWithClient, navigator, "serverMod/routes.json");
             dataExchangeWithClient.sendToClient("Соединение установлено.\nВы можете начать ввод команд");
             do {
                 CommandDescription command = routeGson.fromJson(dataExchangeWithClient.getFromClient( ), CommandDescription.class);

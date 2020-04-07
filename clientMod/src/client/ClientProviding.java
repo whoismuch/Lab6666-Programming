@@ -69,6 +69,7 @@ public class ClientProviding {
 
     public void clientLaunch ( ) throws IOException {
         userManager.writeln(dataExchangeWithServer.getFromServer());
+        userManager.writeln(dataExchangeWithServer.getFromServer());
 
         String line = "check";
         while (!line.equals("exit")) {

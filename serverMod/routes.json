@@ -1,0 +1,79 @@
+[
+  {
+    "name": "wrwer",
+    "id": 2,
+    "coordinates": {
+      "x": 123,
+      "y": 13
+    },
+    "creationDate": "2020-02-19T16:56:51.398+03:00[Europe/Moscow]",
+    "from": {
+      "x": 123,
+      "y": 1
+    },
+    "to": {
+      "x": 123,
+      "y": 123,
+      "name": "23"
+    },
+    "distance": 13.0
+  },
+  {
+    "name": "13131",
+    "id": 3,
+    "coordinates": {
+      "x": 23424,
+      "y": 42
+    },
+    "creationDate": "2020-02-19T18:58:05.144+03:00[Europe/Moscow]",
+    "from": {
+      "x": 234,
+      "y": 2424
+    },
+    "to": {
+      "x": 234242,
+      "y": 2424,
+      "name": "242424"
+    },
+    "distance": 2424.0
+  },
+  {
+    "name": "424",
+    "id": 4,
+    "coordinates": {
+      "x": 2342,
+      "y": 2424
+    },
+    "creationDate": "2020-02-18T20:40:15.39+03:00[Europe/Moscow]",
+    "from": {
+      "x": 242,
+      "y": 4,
+      "name": "234"
+    },
+    "to": {
+      "x": 4,
+      "y": 24242,
+      "name": "2"
+    },
+    "distance": 42.0
+  },
+  {
+    "name": "wrwer",
+    "id": 6,
+    "coordinates": {
+      "x": 123,
+      "y": 13
+    },
+    "creationDate": "2020-02-19T16:56:51.398+03:00[Europe/Moscow]",
+    "from": {
+      "x": 123,
+      "y": 1
+    },
+    "to": {
+      "x": 123,
+      "y": 123,
+      "name": "23"
+    },
+    "distance": 13.0
+  }
+]

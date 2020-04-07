@@ -40,12 +40,12 @@ public class Driver {
 //        registerCommand(new ExitCommand( ));
         registerCommand(new FilterLessThanDistanceCommand( ));
         registerCommand(new HelpCommand( ));
-//        registerCommand(new HistoryCommand( ));
+        registerCommand(new HistoryCommand( ));
         registerCommand(new InfoCommand( ));
 //        registerCommand(new LoadCommand( ));
-//        registerCommand(new PrintAscendingCommand( ));
-//        registerCommand(new RemoveByIdCommand( ));
-//        registerCommand(new RemoveGreaterCommand( ));
+        registerCommand(new PrintAscendingCommand( ));
+        registerCommand(new RemoveByIdCommand( ));
+        registerCommand(new RemoveGreaterCommand( ));
         registerCommand(new RemoveLowerCommand( ));
 //        registerCommand(new SaveCommand( ));
         registerCommand(new ShowCommand( ));
@@ -109,5 +109,9 @@ public class Driver {
 
     public HashMap<String, String> getAvailable ( ) {
         return available;
+    }
+
+    public void load(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String path) {
+        (new LoadCommand()).execute(dataExchangeWithClient, icm, path, null);
     }
 }
