@@ -37,7 +37,7 @@ public class LoadCommand implements Command {
         try {
             int before = icm.size();
             icm.load(arg);
-            dataExchangeWithClient.sendToClient("Добавлено " + (icm.size() - before) + " элементов в коллекцию");
+            //dataExchangeWithClient.sendToClient(("Добавлено " + (icm.size() - before) + " элементов в коллекцию \n"));
         } catch (NoPermissionsException e) {
             dataExchangeWithClient.sendToClient(e.getMessage());
         } catch (JsonSyntaxException e) {

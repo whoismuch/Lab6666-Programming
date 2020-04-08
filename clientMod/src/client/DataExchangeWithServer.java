@@ -1,5 +1,7 @@
 package client;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -25,9 +27,18 @@ public class DataExchangeWithServer {
     }
 
     public String getFromServer() throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byteBuffer = ByteBuffer.allocate(5000);
-        outcomingchannel.read(byteBuffer);
-        String message = new String(byteBuffer.array(), charset);
-        return message.trim();
+        while (outcomingchannel.read(byteBuffer) > 0) {
+            byteBuffer.flip();
+            while (byteBuffer.hasRemaining()) {
+                byte b = byteBuffer.get();
+                System.out.println((char) b);
+                baos.write(b);
+            }
+        }
+        String message = new String(baos.toByteArray(), charset);
+       // System.out.println(message );
+        return message.trim( );
     }
 }

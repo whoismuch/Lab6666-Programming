@@ -37,7 +37,7 @@ public class Driver {
         registerCommand(new AddCommand( ));
         registerCommand(new ClearCommand( ));
 //        registerCommand(new ExecuteScriptCommand( ));
-//        registerCommand(new ExitCommand( ));
+        registerCommand(new ExitCommand( ));
         registerCommand(new FilterLessThanDistanceCommand( ));
         registerCommand(new HelpCommand( ));
         registerCommand(new HistoryCommand( ));
@@ -108,10 +108,15 @@ public class Driver {
     }
 
     public HashMap<String, String> getAvailable ( ) {
+        System.out.println(available);
         return available;
     }
 
     public void load(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String path) {
         (new LoadCommand()).execute(dataExchangeWithClient, icm, path, null);
+    }
+
+    public void save(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String path) {
+        (new SaveCommand()).execute(dataExchangeWithClient, icm, path, null);
     }
 }

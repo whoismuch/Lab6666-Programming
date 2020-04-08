@@ -280,4 +280,7 @@ public class UserManager {
         return result;
     }
 
+    public HashMap<String, String> getAvailable ( ) {
+        return available;
+    }
 }

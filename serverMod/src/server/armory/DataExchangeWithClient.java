@@ -25,6 +25,7 @@ public class DataExchangeWithClient {
     public void sendToClient (String message) {
         try {
             local = message.getBytes(charset);
+            System.out.println(message );
             sendToClient.write(local);
         } catch (IOException e) {
             e.printStackTrace( );

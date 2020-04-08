@@ -12,36 +12,44 @@ import java.time.ZonedDateTime;
 
 public class ServerConnection<T> {
 
-    private Navigator navigator;
     private Socket incoming;
-    private Driver driver;
+    private static Driver driver;
+    private static Navigator navigator;
+    private static String path;
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Gson routeGson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(ZonedDateTime.class, new GsonZonedDateTimeConverter()).create();
 
-    public ServerConnection (Navigator navigator, Socket incoming) {
+    public ServerConnection (Navigator navigator, Socket incoming, String path) {
         driver = new Driver( );
         this.navigator = navigator;
         this.incoming = incoming;
+        this.path = path;
     }
 
 
-    public void serverWork ( ) throws  IOException {
+    public void serverWork () throws  IOException {
         try (DataOutputStream sendToClient = new DataOutputStream(incoming.getOutputStream( ));
              DataInputStream getFromClient = new DataInputStream(incoming.getInputStream( ))) {
 
-            DataExchangeWithClient dataExchangeWithClient = new DataExchangeWithClient(getFromClient,sendToClient);
-            Driver driver = new Driver();
-            dataExchangeWithClient.sendToClient(gson.toJson(driver.getAvailable()));
-            driver.load(dataExchangeWithClient, navigator, "serverMod/routes.json");
-            dataExchangeWithClient.sendToClient("Соединение установлено.\nВы можете начать ввод команд");
-            do {
+
+            DataExchangeWithClient dataExchangeWithClient = new DataExchangeWithClient(getFromClient, sendToClient);
+            dataExchangeWithClient.sendToClient(gson.toJson(driver.getAvailable( )));
+            driver.load(dataExchangeWithClient, navigator, path);
+            while (true) {
+                boolean flag = false;
                 CommandDescription command = routeGson.fromJson(dataExchangeWithClient.getFromClient( ), CommandDescription.class);
+                if (command.getName( ).equals("exit")) flag = true;
                 Driver.getLive( ).execute(dataExchangeWithClient, navigator, command.getName( ), command.getArg( ), command.getRoute( ));
-            } while (!incoming.isClosed());
-            System.out.println("пока-пока");
+                System.out.println(2);
+                if (flag) break;
+                System.out.println(5);
+            }
 
         }
-
     }
 
+
+    public static void theEnd() {
+        driver.save(null, navigator, path );
+    }
 }
