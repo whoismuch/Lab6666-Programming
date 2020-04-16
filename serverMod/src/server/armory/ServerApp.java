@@ -27,12 +27,15 @@ public class ServerApp {
             ss.bind(address);
             System.out.print("Сервер начал слушать клиента " + "\nПорт " + ss.getLocalAddress( ) +
                     " / Адрес " + InetAddress.getLocalHost( ) + ".\nОжидаем подключения клиента\n ");
+           // String path = args[0];
             String path = "serverMod/routes.json";
-            Socket incoming = (ss.accept()).socket();
-            System.out.println(incoming + " подключился к серверу.");
-
-            ServerConnection sc = new ServerConnection(navigator, incoming, path);
-            sc.serverWork( );
+            while (true) {
+                Socket incoming = (ss.accept( )).socket( );
+                System.out.println(incoming + " подключился к серверу.");
+                ServerConnection sc = new ServerConnection(navigator, incoming, path);
+                sc.serverWork( );
+                incoming.close();
+            }
 
         } catch (UnknownHostException e) {
             e.printStackTrace( );

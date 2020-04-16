@@ -1,11 +1,9 @@
 package client;
 
-import com.google.gson.reflect.TypeToken;
 import common.command.CommandDescription;
 import common.generatedClasses.Route;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.channels.SelectionKey;
@@ -19,32 +17,39 @@ import java.util.Scanner;
 public class ClientProviding {
 
     private DataExchangeWithServer dataExchangeWithServer;
-    private SocketAddress outcoming;
     private UserManager userManager;
     private Selector selector;
     private String commandname;
-    private SocketChannel outcomingchannel;
     /**
      * Устанавливает активное соединение с сервером.
      */
-    public void clientWork ( ) {
+    public void clientWork (boolean iBegin) {
         try (Scanner scanner = new Scanner(System.in)) {
-            outcoming = new InetSocketAddress("localhost", 8443);
+            SocketAddress outcoming = new InetSocketAddress("localhost", 8443);
+            userManager = new UserManager(scanner,
+                    new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8)),
+                    true);
             while (true) {
                 try (SocketChannel outcomingchannel = SocketChannel.open(outcoming)) {
 
-                    this.outcomingchannel = outcomingchannel;
                     dataExchangeWithServer = new DataExchangeWithServer(outcomingchannel);
 
                     selector = Selector.open( );
                     outcomingchannel.configureBlocking(false);
                     outcomingchannel.register(selector, SelectionKey.OP_READ);
 
-                    selector.select( );
-                    userManager = new UserManager(scanner, new BufferedWriter(new OutputStreamWriter(System.out, StandardCharsets.UTF_8)), true, (HashMap) dataExchangeWithServer.getFromServer( ));
+                    String beginMessage = "I've already got everything :(";
+                    if(iBegin) beginMessage = "I'm ready to get available commands and base collection ";
+                    dataExchangeWithServer.sendToServer(beginMessage);
+                    if (iBegin) {
+                        selector.select( );
+                        userManager.setAvailable((HashMap) dataExchangeWithServer.getFromServer());
+                        iBegin = false;
+                    }
+
+
                     clientLaunch( );
-                    userManager.write("Завершение программы.");
-                    System.exit(0);
+                    exit();
                 } catch (IOException e) {
                     if (!commandname.equals("exit")) {
                         userManager.writeln("Нет связи с сервером. Подключиться ещё раз (введите {да} или {нет})?");
@@ -54,7 +59,7 @@ public class ClientProviding {
                                 case "":
                                     break;
                                 case "нет":
-                                    System.exit(0);
+                                    exit();
                                     break;
                                 default:
                                     userManager.write("Введите корректный ответ.");
@@ -62,50 +67,52 @@ public class ClientProviding {
                         }
                         userManager.writeln("Подключение ...");
                         continue;
-                    } else userManager.writeln("Завершение работы");
+                    } else exit();
                 }
             }
         }
     }
 
 
-        public void clientLaunch () throws IOException {
+    public void clientLaunch () throws IOException {
 
-            String line = "check";
-            while (!line.equals("exit")) {
-                userManager.write("Введите команду: ");
-                line = userManager.read( );
-                line = line.trim( );
-                commandname = line;
-                String arg = null;
-                if (line.indexOf(" ") != -1) {
-                    commandname = line.substring(0, line.indexOf(" "));
-                    arg = (line.substring(line.indexOf(" "))).trim( );
-                }
-
-                if (!userManager.checkCommandName(commandname)) {
-                    continue;
-                }
-                if (!userManager.checkArg(commandname, arg)) {
-                    continue;
-                }
-
-                CommandDescription command;
-                if (userManager.checkElement(commandname)) {
-                    Route route = userManager.readRoute( );
-                    command = new CommandDescription(commandname, arg, route);
-                } else {
-                    command = new CommandDescription(commandname, arg, null);
-                }
-
-                outcomingchannel.register(selector, SelectionKey.OP_WRITE);
-                selector.select();
-                dataExchangeWithServer.sendToServer(command);
-
-                outcomingchannel.register(selector, SelectionKey.OP_READ);
-                selector.select( );
-                userManager.writeln(dataExchangeWithServer.getFromServer( ).toString());
-
+        String line = "check";
+        while (!line.equals("exit")) {
+            userManager.write("Введите команду: ");
+            line = userManager.read( );
+            line = line.trim( );
+            commandname = line;
+            String arg = null;
+            if (line.indexOf(" ") != -1) {
+                commandname = line.substring(0, line.indexOf(" "));
+                arg = (line.substring(line.indexOf(" "))).trim( );
             }
+
+            if (!userManager.checkCommandName(commandname)) {
+                continue;
+            }
+            if (!userManager.checkArg(commandname, arg)) {
+                continue;
+            }
+
+            CommandDescription command;
+            if (userManager.checkElement(commandname)) {
+                Route route = userManager.readRoute( );
+                command = new CommandDescription(commandname, arg, route);
+            } else {
+                command = new CommandDescription(commandname, arg, null);
+            }
+
+            dataExchangeWithServer.sendToServer(command);
+
+            selector.select( );
+            userManager.writeln(dataExchangeWithServer.getFromServer( ).toString());
+
         }
+
     }
+    public void exit() {
+            userManager.write("Завершение программы.");
+            System.exit(0);
+    }
+}

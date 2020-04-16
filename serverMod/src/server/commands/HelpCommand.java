@@ -1,8 +1,8 @@
 package server.commands;
 
 import common.generatedClasses.Route;
-import server.armory.DataExchangeWithClient;
 import server.armory.Driver;
+import server.armory.SendToClient;
 import server.receiver.collection.ICollectionManager;
 
 
@@ -31,9 +31,8 @@ public class HelpCommand implements Command {
     }
 
     @Override
-    public void execute(DataExchangeWithClient dataExchange, ICollectionManager icm, String arg, Route route, Driver driver) {
-        String s = driver.getAllCommands().stream().map(x -> x.toString()).collect(Collectors.joining("\n"));
-        dataExchange.sendToClient(s);
+    public void execute(SendToClient sendToClient, ICollectionManager icm, String arg, Route route, Driver driver) {
+        sendToClient.send(driver.getAllCommands().stream().map(x -> x.toString()).collect(Collectors.joining("\n")));
     }
 
 

@@ -6,7 +6,7 @@
       "x": 5,
       "y": 5
     },
-    "creationDate": "2020-04-08T19:54:49.859+03:00[Europe/Moscow]",
+    "creationDate": "2020-04-16T13:05:22.038+03:00[Europe/Moscow]",
     "from": {
       "x": 5,
       "y": 5,
@@ -26,47 +26,7 @@
       "x": 5,
       "y": 5
     },
-    "creationDate": "2020-04-08T20:05:56.329+03:00[Europe/Moscow]",
-    "from": {
-      "x": 5,
-      "y": 5,
-      "name": "5"
-    },
-    "to": {
-      "x": 5,
-      "y": 5,
-      "name": "5"
-    },
-    "distance": 5.0
-  },
-  {
-    "name": "5",
-    "id": 3,
-    "coordinates": {
-      "x": 5,
-      "y": 5
-    },
-    "creationDate": "2020-04-08T19:54:49.859+03:00[Europe/Moscow]",
-    "from": {
-      "x": 5,
-      "y": 5,
-      "name": "5"
-    },
-    "to": {
-      "x": 5,
-      "y": 5,
-      "name": "5"
-    },
-    "distance": 5.0
-  },
-  {
-    "name": "5",
-    "id": 4,
-    "coordinates": {
-      "x": 5,
-      "y": 5
-    },
-    "creationDate": "2020-04-08T20:05:56.329+03:00[Europe/Moscow]",
+    "creationDate": "2020-04-16T13:05:22.038+03:00[Europe/Moscow]",
     "from": {
       "x": 5,
       "y": 5,

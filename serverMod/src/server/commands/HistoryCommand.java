@@ -1,8 +1,8 @@
 package server.commands;
 
 import common.generatedClasses.Route;
-import server.armory.DataExchangeWithClient;
 import server.armory.Driver;
+import server.armory.SendToClient;
 import server.receiver.collection.ICollectionManager;
 
 import java.util.stream.Collectors;
@@ -30,11 +30,11 @@ public class HistoryCommand implements Command {
     }
 
     @Override
-    public void execute(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String arg, Route route, Driver driver) {
+    public void execute(SendToClient sendToClient, ICollectionManager icm, String arg, Route route, Driver driver) {
         if (driver.getHistory().size() == 0) {
-            dataExchangeWithClient.sendToClient("Вы еще ничего не вводили");
+            sendToClient.send("Вы еще ничего не вводили");
         } else {
-            dataExchangeWithClient.sendToClient(driver.getHistory().stream().collect(Collectors.joining("\n")));
+            sendToClient.send(driver.getHistory().stream().collect(Collectors.joining("\n")));
         }
     }
 

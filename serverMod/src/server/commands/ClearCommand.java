@@ -1,8 +1,8 @@
 package server.commands;
 
 import common.generatedClasses.Route;
-import server.armory.DataExchangeWithClient;
 import server.armory.Driver;
+import server.armory.SendToClient;
 import server.receiver.collection.ICollectionManager;
 
 
@@ -33,9 +33,9 @@ public class ClearCommand implements Command {
 
 
     @Override
-    public void execute(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String arg, Route route, Driver driver) {
+    public void execute(SendToClient sendToClient, ICollectionManager icm, String arg, Route route, Driver driver) {
         icm.clear();
-        dataExchangeWithClient.sendToClient("Коллекция очищена!");
+        sendToClient.send("Коллекция очищена!");
     }
 
     /**

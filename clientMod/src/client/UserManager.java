@@ -17,11 +17,10 @@ public class UserManager {
 
     private HashMap<String,String> available = new HashMap<>();
 
-    public UserManager(Scanner scanner, Writer writer, boolean manualInput, HashMap<String,String> available) {
+    public UserManager(Scanner scanner, Writer writer, boolean manualInput) {
         this.writer = writer;
         this.scanner = scanner;
         this.manualInput = manualInput;
-        this.available = available;
     }
 
     /**
@@ -282,5 +281,9 @@ public class UserManager {
 
     public HashMap<String, String> getAvailable ( ) {
         return available;
+    }
+
+    public void setAvailable (HashMap<String, String> available) {
+        this.available = available;
     }
 }

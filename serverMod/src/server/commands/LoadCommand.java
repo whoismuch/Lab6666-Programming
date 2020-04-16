@@ -2,10 +2,9 @@ package server.commands;
 
 import com.google.gson.JsonSyntaxException;
 import common.generatedClasses.Route;
-import server.armory.DataExchangeWithClient;
 import server.armory.Driver;
+import server.armory.SendToClient;
 import server.exceptions.NoPermissionsException;
-import server.receiver.UserManager;
 import server.receiver.collection.ICollectionManager;
 
 import java.io.FileNotFoundException;
@@ -34,21 +33,21 @@ public class LoadCommand implements Command {
      */
 
     @Override
-    public void execute(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String arg, Route route, Driver driver) {
+    public void execute(SendToClient sendToClient, ICollectionManager icm, String arg, Route route, Driver driver) {
         try {
             int before = icm.size();
             icm.load(arg);
             //dataExchangeWithClient.sendToClient(("Добавлено " + (icm.size() - before) + " элементов в коллекцию \n"));
         } catch (NoPermissionsException e) {
-            dataExchangeWithClient.sendToClient(e.getMessage());
+            sendToClient.send(e.getMessage());
         } catch (JsonSyntaxException e) {
-            dataExchangeWithClient.sendToClient("Ошибка парсера, сохраненная на сервере коллекция не доступна");
+            sendToClient.send("Ошибка парсера, сохраненная на сервере коллекция не доступна");
         } catch (NullPointerException e) {
-            dataExchangeWithClient.sendToClient("Файл пуст! Сохраненная на сервере коллекция не доступна");
+            sendToClient.send("Файл пуст! Сохраненная на сервере коллекция не доступна");
         } catch (FileNotFoundException e) {
-            dataExchangeWithClient.sendToClient("Упс... у нас неполадки. Сохраненная на сервере коллекция не доступна");
+            sendToClient.send("Упс... у нас неполадки. Сохраненная на сервере коллекция не доступна");
         } catch (IOException e) {
-            dataExchangeWithClient.sendToClient("Ошибка при рабтое с файлом. Сохраненная на сервере коллекция не достуна");
+            sendToClient.send("Ошибка при рабтое с файлом. Сохраненная на сервере коллекция не достуна");
         }
     }
 

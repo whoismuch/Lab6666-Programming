@@ -26,7 +26,7 @@ public class DataExchangeWithServer {
        baos.flush();
     }
 
-    public Object getFromServer()  {
+    public Object getFromServer() throws IOException {
         try  {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ByteBuffer byteBuffer = ByteBuffer.allocate(5);
@@ -38,10 +38,6 @@ public class DataExchangeWithServer {
         ByteArrayInputStream bios = new ByteArrayInputStream(baos.toByteArray());
         ObjectInputStream ois = new ObjectInputStream(bios);
         return ois.readObject();
-        }
-        catch (IOException e) {
-            e.printStackTrace( );
-            return null;
         } catch (ClassNotFoundException e) {
             e.printStackTrace( );
             return null;

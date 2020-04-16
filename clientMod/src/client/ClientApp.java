@@ -10,7 +10,7 @@ public class ClientApp {
     public static void main(String[] args) throws IOException {
         System.out.println("Запуск клиентского модуля.\nПодключение к серверу ...");
         ClientProviding provide = new ClientProviding();
-        provide.clientWork();
+        provide.clientWork(true);
     }
 }
 

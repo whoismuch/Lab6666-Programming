@@ -1,9 +1,8 @@
 package server.commands;
 
 import common.generatedClasses.Route;
-import server.armory.DataExchangeWithClient;
 import server.armory.Driver;
-import server.receiver.UserManager;
+import server.armory.SendToClient;
 import server.receiver.collection.ICollectionManager;
 
 /**
@@ -34,9 +33,9 @@ public class UpdateIdCommand implements Command {
      */
 
     @Override
-    public void execute(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String arg, Route route, Driver driver) {
+    public void execute(SendToClient sendToClient, ICollectionManager icm, String arg, Route route, Driver driver) {
         Long id = Long.parseLong(arg);
-        dataExchangeWithClient.sendToClient(icm.updateId(id,route)? "Объект с id: " + id + " обновлен" : "Элемент с введенным id не найден");
+        sendToClient.send(icm.updateId(id,route)? "Объект с id: " + id + " обновлен" : "Элемент с введенным id не найден");
     }
 
     /**

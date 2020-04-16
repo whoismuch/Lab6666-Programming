@@ -1,8 +1,8 @@
 package server.commands;
 
 import common.generatedClasses.Route;
-import server.armory.DataExchangeWithClient;
 import server.armory.Driver;
+import server.armory.SendToClient;
 import server.receiver.collection.ICollectionManager;
 
 /**
@@ -35,8 +35,8 @@ public class ExitCommand implements Command {
      */
 
     @Override
-    public void execute(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String arg, Route route, Driver driver) {
-        dataExchangeWithClient.sendToClient("Завершаю работу...");
+    public void execute(SendToClient sendToClient, ICollectionManager icm, String arg, Route route, Driver driver) {
+        sendToClient.send("Завершаю работу...");
     }
 
 

@@ -67,14 +67,10 @@ public class Driver {
      * @param line
      * @throws NoExecuteScriptInScript ошибка возникает, если в скрипте будет команда вызова скрипта
      */
-    public void execute (DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String line, String arg, Route route, Driver driver) throws NoExecuteScriptInScript {
+    public void execute (SendToClient sendToClient, ICollectionManager icm, String line, String arg, Route route, Driver driver) throws NoExecuteScriptInScript {
         Command command = man.get(line);
-        if (command == null) {
-            dataExchangeWithClient.sendToClient("Неверное имя команды : " + line);
-        } else {
-            command.execute(dataExchangeWithClient, icm, arg, route, driver);
-            addHisrory(line);
-        }
+        command.execute(sendToClient, icm, arg, route, driver);
+        addHisrory(line);
     }
 
     /**
@@ -106,11 +102,11 @@ public class Driver {
         return available;
     }
 
-    public void load(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String path) {
-        (new LoadCommand()).execute(dataExchangeWithClient, icm, path, null, this);
+    public void load(SendToClient sendToClient, ICollectionManager icm, String path) {
+        (new LoadCommand()).execute(sendToClient, icm, path, null, this);
     }
 
-    public void save(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String path) {
-        (new SaveCommand()).execute(dataExchangeWithClient, icm, path, null, this);
+    public void save(SendToClient sendToClient, ICollectionManager icm, String path) {
+        (new SaveCommand()).execute(sendToClient, icm, path, null, this);
     }
 }

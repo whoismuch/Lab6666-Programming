@@ -1,8 +1,8 @@
 package server.commands;
 
 import common.generatedClasses.Route;
-import server.armory.DataExchangeWithClient;
 import server.armory.Driver;
+import server.armory.SendToClient;
 import server.receiver.collection.ICollectionManager;
 
 /**
@@ -30,9 +30,9 @@ public class RemoveByIdCommand implements Command {
      */
 
     @Override
-    public void execute(DataExchangeWithClient dataExchangeWithClient, ICollectionManager icm, String arg, Route route, Driver driver) {
+    public void execute(SendToClient sendToClient, ICollectionManager icm, String arg, Route route, Driver driver) {
         Long id = Long.parseLong(arg);
-        dataExchangeWithClient.sendToClient(icm.removeById(id)? "Элемент с id : " + id + " удален!": "Элемент не найден");
+        sendToClient.send(icm.removeById(id)? "Элемент с id : " + id + " удален!": "Элемент не найден");
     }
 
     /**
